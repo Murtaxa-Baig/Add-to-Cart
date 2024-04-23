@@ -10,8 +10,24 @@ export default function ProductCard({
     rating,
     addToCart,
     item,
-    setCart
+    setCart,
+    cartProduct,
+    setCartProduct
 }) {
+
+    const isItemInCart = cartProduct.some(cartItem => cartItem.id === id);
+
+    const removeFromCart = (id) => {
+        const existingProduct = cartProduct.filter((item, ind) => {
+            if (item?.id !== id)
+                return item
+        })
+        setCartProduct([...existingProduct])
+        if (cartProduct.length < 0) {
+            setOpenCart(false)
+        }
+    }
+
     return (
         <>
             <div class="max-w-sm rounded overflow-hidden shadow-lg card m-1 py-2 flex flex-col justify-between">
@@ -27,7 +43,25 @@ export default function ProductCard({
                 </div>
                 <div class="px-6 pt-4 pb-8 flex justify-between items-center">
                     <p class="text-gray-700 text-base font-bold">${price}</p>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" onClick={() => addToCart(item)}>Add to Cart</button>
+                    {/* <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" onClick={() => addToCart(item)}>Add to Cart</button> */}
+                    {
+                        // Conditionally render Add to Cart or Cancel button
+                        isItemInCart ? (
+                            <button
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2"
+                                onClick={() => removeFromCart(id)}
+                            >
+                                Remove from Cancel
+                            </button>
+                        ) : (
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                                onClick={() => addToCart(item)}
+                            >
+                                Add to Cart
+                            </button>
+                        )
+                    }
                 </div>
             </div>
 

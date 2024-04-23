@@ -47,6 +47,8 @@ export default function Home() {
                   rating={item?.rating}
                   item={item}
                   addToCart={addToCart}
+                  cartProduct={cartProduct}
+                  setCartProduct={setCartProduct}
                 />
               </>
             )
